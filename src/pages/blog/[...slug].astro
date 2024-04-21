@@ -1,31 +1,28 @@
 ---
 export const prerender = false;
 
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
-import { defineCollection } from 'astro:content';
-import { db, Reactions } from 'astro:db';
 import { getEntry } from 'astro:content';
+import { db, Reactions } from 'astro:db';
 
 const {slug} = Astro.params;
-// export async function getStaticPaths() {
-// 	const posts = await getCollection('blog');
-// 	return posts.map((post) => ({
-// 		params: { slug: post.slug },
-// 		props: post,
-// 	}));
-// }
+if (!slug) {
+  return Astro.redirect("/");
+}
 
 type Props = CollectionEntry<'blog'>;
 
-const post = await getEntry('blog', slug)
-
+const post = await getEntry("blog", slug)
+if (!post) {
+  return Astro.redirect("/");
+}
 const total = await db.select().from(Reactions);
 
 const { Content } = await post.render();
 ---
 
-<BlogPost {...post.data}>
+<BlogPost data={post.data} num_of_likes={total.length} slug={slug}>
 	{
 		total.map(({id, title}) => (
 

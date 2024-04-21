@@ -1,0 +1,43 @@
+---
+type Props = {
+  title: string;
+  num_of_likes: number;
+}
+
+const { title, num_of_likes} = Astro.props;
+---
+
+<button id="reaction-btn" class="reaction-btn" data-title={title}>
+  <div id="reaction-span">{num_of_likes}</div>
+  <span>💘</span>
+</button>
+
+<script>
+  const reactionBtn = document.querySelector('#reaction-btn') as HTMLButtonElement;
+  const reactionSpan = document.querySelector('#reaction-span') as HTMLButtonElement;
+  const title = reactionBtn.dataset.title as string;
+
+  reactionBtn.addEventListener("click", async () => {
+    reactionBtn.disabled = true;
+    //@ts-ignore
+    reactionSpan.textContent = (++reactionSpan.textContent).toString();
+    try{
+      const req = await fetch("/api/addReaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+        }),
+      });
+      localStorage.setItem(title, "true");
+    }catch(e){
+      console.error(e);
+      alert("Ya la cagaste");
+    }
+  
+  })
+
+
+</script>
