@@ -4,7 +4,7 @@ export const prerender = false;
 import { type CollectionEntry } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { getEntry } from 'astro:content';
-import { db, Reactions } from 'astro:db';
+import { db, eq, Reactions } from 'astro:db';
 
 const {slug} = Astro.params;
 if (!slug) {
@@ -17,7 +17,7 @@ const post = await getEntry("blog", slug)
 if (!post) {
   return Astro.redirect("/");
 }
-const total = await db.select().from(Reactions);
+const total = await db.select().from(Reactions).where(eq(Reactions.title, slug));
 
 const { Content } = await post.render();
 ---

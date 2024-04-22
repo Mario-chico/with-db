@@ -16,6 +16,15 @@ const { title, num_of_likes} = Astro.props;
   const reactionBtn = document.querySelector('#reaction-btn') as HTMLButtonElement;
   const reactionSpan = document.querySelector('#reaction-span') as HTMLButtonElement;
   const title = reactionBtn.dataset.title as string;
+  
+
+   // decide whether or not it’s disabled on page load
+   window.addEventListener("DOMContentLoaded", () => {
+    const isLiked = localStorage.getItem(title);
+    if (isLiked) {
+      reactionBtn.disabled = true;
+    }
+  });
 
   reactionBtn.addEventListener("click", async () => {
     reactionBtn.disabled = true;
@@ -32,6 +41,7 @@ const { title, num_of_likes} = Astro.props;
         }),
       });
       localStorage.setItem(title, "true");
+      console.log(title);
     }catch(e){
       console.error(e);
       alert("Ya la cagaste");
