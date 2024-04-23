@@ -9,10 +9,13 @@ import ReactionCounter from '../components/ReactionCounter.astro';
 type Props = {
   data: any;
   num_of_likes: number;
+  num_of_fire: number;
+  num_of_thumb: number;
+  num_of_rocket: number;
   slug: string;
 };
 
-const { data, num_of_likes, slug } = Astro.props;
+const { data, num_of_likes, num_of_fire, num_of_thumb, num_of_rocket, slug } = Astro.props;
 
 const { title, description, pubDate, updatedDate, heroImage } = data;
 ---
@@ -65,7 +68,7 @@ const { title, description, pubDate, updatedDate, heroImage } = data;
 		<Header />
 		<main>
 			<article>
-				<ReactionCounter title={slug} num_of_likes={num_of_likes} />
+				<ReactionCounter title={slug} num_of_like={num_of_likes} num_of_fire={num_of_fire} num_of_thumb={num_of_thumb} num_of_rocket={num_of_rocket} slug={slug}/>
 				<div class="hero-image">
 					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 				</div>

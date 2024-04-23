@@ -22,7 +22,7 @@ const total = await db.select().from(Reactions).where(eq(Reactions.slug, slug));
 const { Content } = await post.render();
 ---
 
-<BlogPost data={post.data} num_of_likes={total.length} slug={slug}>
+<BlogPost data={post.data} num_of_likes={2} num_of_fire={3} num_of_thumb={1} num_of_rocket={100} slug={slug}>
 	
 	<Content />
 </BlogPost>

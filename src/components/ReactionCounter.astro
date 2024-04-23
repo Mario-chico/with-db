@@ -1,27 +1,47 @@
 ---
 type Props = {
   title: string;
-  num_of_likes: number;
+  num_of_like: number;
+  num_of_fire: number;
+  num_of_thumb: number;
+  num_of_rocket: number;
   slug: string;
 }
 
-const { title, num_of_likes, slug} = Astro.props;
+const { title, num_of_like, num_of_fire, num_of_thumb, num_of_rocket, slug} = Astro.props;
 const emojiMap: {[index: string]: any} = {
   like: '👍🏿',
   fire: '❤️‍🔥',
-  thumbDown: '👎🏿',
+  thumb: '👎🏿',
   rocket: '🚀'
 };
-const reactions = ['like', 'fire', 'thumbDown', 'rocket'];
+const reactions = ['like', 'fire', 'thumb', 'rocket'];
 ---
-{
+<!-- {
   reactions.map(reaction => (
+  
   <button data-reaction={reaction} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
-    <div id="reaction-span">{num_of_likes}</div>
+    <div id="reaction-span">{num_of_like}</div>
     <span>{emojiMap[reaction]}</span>
   </button>
   ))
-}
+} -->
+<button data-reaction={reactions[0]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+  <div id="reaction-span">{num_of_like}</div>
+  <span>{emojiMap.like}</span>
+</button>
+<button data-reaction={reactions[1]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+  <div id="reaction-span">{num_of_fire}</div>
+  <span>{emojiMap.fire}</span>
+</button>
+<button data-reaction={reactions[2]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+  <div id="reaction-span">{num_of_thumb}</div>
+  <span>{emojiMap.thumb}</span>
+</button>
+<button data-reaction={reactions[3]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+  <div id="reaction-span">{num_of_rocket}</div>
+  <span>{emojiMap.rocket}</span>
+</button>
 
 
 <script>
