@@ -17,19 +17,12 @@ const post = await getEntry("blog", slug)
 if (!post) {
   return Astro.redirect("/");
 }
-const total = await db.select().from(Reactions).where(eq(Reactions.title, slug));
+const total = await db.select().from(Reactions).where(eq(Reactions.slug, slug));
 
 const { Content } = await post.render();
 ---
 
 <BlogPost data={post.data} num_of_likes={total.length} slug={slug}>
-	{
-		total.map(({id, title}) => (
-
-			<p> Puro pinche {title}</p>
-			<p> Puro pinche {id}</p>
-
-		))
-	}
+	
 	<Content />
 </BlogPost>

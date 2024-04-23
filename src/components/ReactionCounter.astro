@@ -2,52 +2,90 @@
 type Props = {
   title: string;
   num_of_likes: number;
+  slug: string;
 }
 
-const { title, num_of_likes} = Astro.props;
+const { title, num_of_likes, slug} = Astro.props;
+const emojiMap: {[index: string]: any} = {
+  like: '👍🏿',
+  fire: '❤️‍🔥',
+  thumbDown: '👎🏿',
+  rocket: '🚀'
+};
+const reactions = ['like', 'fire', 'thumbDown', 'rocket'];
 ---
+{
+  reactions.map(reaction => (
+  <button data-reaction={reaction} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+    <div id="reaction-span">{num_of_likes}</div>
+    <span>{emojiMap[reaction]}</span>
+  </button>
+  ))
+}
 
-<button id="reaction-btn" class="reaction-btn" data-title={title}>
-  <div id="reaction-span">{num_of_likes}</div>
-  <span>💘</span>
-</button>
 
 <script>
-  const reactionBtn = document.querySelector('#reaction-btn') as HTMLButtonElement;
-  const reactionSpan = document.querySelector('#reaction-span') as HTMLButtonElement;
-  const title = reactionBtn.dataset.title as string;
+  // const reactionBtn = document.querySelector('#reaction-btn') as HTMLButtonElement;
+  // const reactionSpan = document.querySelector('#reaction-span') as HTMLButtonElement;
+
+  // const reactionBtnAb = document.querySelector('#reaction-btn-ab') as HTMLButtonElement;
+  // const reactionSpanAb = document.querySelector('#reaction-span-ab') as HTMLButtonElement;
+  // const title = reactionBtn.dataset.title as string;
   
 
-   // decide whether or not it’s disabled on page load
-   window.addEventListener("DOMContentLoaded", () => {
-    const isLiked = localStorage.getItem(title);
-    if (isLiked) {
-      reactionBtn.disabled = true;
-    }
-  });
+  //  // decide whether or not it’s disabled on page load
+  //  window.addEventListener("DOMContentLoaded", () => {
+  //   const isLiked = localStorage.getItem(title);
+  //   if (isLiked) {
+  //     reactionBtn.disabled = true;
+  //     reactionBtnAb.disabled = true;
+  //   }
+  // });
 
-  reactionBtn.addEventListener("click", async () => {
-    reactionBtn.disabled = true;
-    //@ts-ignore
-    reactionSpan.textContent = (++reactionSpan.textContent).toString();
-    try{
-      const req = await fetch("/api/addReaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-        }),
-      });
-      localStorage.setItem(title, "true");
-      console.log(title);
-    }catch(e){
-      console.error(e);
-      alert("Ya la cagaste");
-    }
+  // reactionBtn.addEventListener("click", async () => {
+  //   reactionBtn.disabled = true;
+  //   //@ts-ignore
+  //   reactionSpan.textContent = (++reactionSpan.textContent).toString();
+  //   try{
+  //     const req = await fetch("/api/addReaction", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         title,
+  //       }),
+  //     });
+  //     localStorage.setItem(title, "true");
+  //     console.log(title);
+  //   }catch(e){
+  //     console.error(e);
+  //     alert("Ya la cagaste");
+  //   }
   
-  })
+  // })
 
+  // reactionBtnAb.addEventListener("click", async () => {
+  //   reactionBtnAb.setAttribute('style', 'color:red');
+  //   //@ts-ignore
+  //   reactionSpanAb.textContent = (++reactionSpanAb.textContent).toString();
+  //   try{
+  //     const req = await fetch("/api/addReaction", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         title,
+  //       }),
+  //     });
+  //     localStorage.setItem(title, "true");
+  //     console.log(title);
+  //   }catch(e){
+  //     console.error(e);
+  //     alert("Ya la cagaste");
+  //   }
+  
+  // })
 
 </script>

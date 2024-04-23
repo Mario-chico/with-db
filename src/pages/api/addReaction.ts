@@ -4,15 +4,15 @@ import { Reactions, db } from "astro:db";
 export const prerender = false;
 
 export const POST: APIRoute = async ({request}) => {
-  const {title} = await request.json();
+  const {slug} = await request.json();
 
-  if(!title) {
+  if(!slug) {
     return new Response(null, {
       status: 404,
       statusText: "Nombre no"
     });
   }
-  const req = await db.insert(Reactions).values({title});
+  const req = await db.insert(Reactions).values({slug});
 
   return new Response(JSON.stringify({ success: true}), {
     status: 200,
