@@ -26,12 +26,12 @@ const reactions = ['like', 'fire', 'thumb', 'rocket'];
   </button>
   ))
 } -->
-<button data-reaction={reactions[0]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
+<button data-reaction={reactions[0]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title} >
   <div id="reaction-span">{num_of_like}</div>
   <span>{emojiMap.like}</span>
 </button>
-<button data-reaction={reactions[1]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
-  <div id="reaction-span">{num_of_fire}</div>
+<button data-reaction={reactions[1]} data-slug={slug} id="fire-btn" class="reaction-btn" data-title={title} data-fire={num_of_fire}>
+  <div id="fire-span">{num_of_fire}</div>
   <span>{emojiMap.fire}</span>
 </button>
 <button data-reaction={reactions[2]} data-slug={slug} id="reaction-btn" class="reaction-btn" data-title={title}>
@@ -43,14 +43,21 @@ const reactions = ['like', 'fire', 'thumb', 'rocket'];
   <span>{emojiMap.rocket}</span>
 </button>
 
-
+<style>
+  .reaction-btn:hover {
+    cursor: pointer;
+  }
+</style>
 <script>
   // const reactionBtn = document.querySelector('#reaction-btn') as HTMLButtonElement;
   // const reactionSpan = document.querySelector('#reaction-span') as HTMLButtonElement;
 
-  // const reactionBtnAb = document.querySelector('#reaction-btn-ab') as HTMLButtonElement;
-  // const reactionSpanAb = document.querySelector('#reaction-span-ab') as HTMLButtonElement;
-  // const title = reactionBtn.dataset.title as string;
+  const fireBtn = document.querySelector('#fire-btn') as HTMLButtonElement;
+  const fireSpan = document.querySelector('#fire-span') as HTMLButtonElement;
+  const slug = fireBtn.dataset.slug as string;
+   const fire = fireBtn.dataset.fire;
+   console.log('este es el fireBtn.slug' + slug);
+   console.log('este es el fireBtn.fire' + fire);
   
 
   //  // decide whether or not it’s disabled on page load
@@ -62,28 +69,28 @@ const reactions = ['like', 'fire', 'thumb', 'rocket'];
   //   }
   // });
 
-  // reactionBtn.addEventListener("click", async () => {
-  //   reactionBtn.disabled = true;
-  //   //@ts-ignore
-  //   reactionSpan.textContent = (++reactionSpan.textContent).toString();
-  //   try{
-  //     const req = await fetch("/api/addReaction", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         title,
-  //       }),
-  //     });
-  //     localStorage.setItem(title, "true");
-  //     console.log(title);
-  //   }catch(e){
-  //     console.error(e);
-  //     alert("Ya la cagaste");
-  //   }
-  
-  // })
+  fireBtn.addEventListener("click", async () => {
+    fireBtn.disabled = true;
+     //@ts-ignore
+     fireSpan.textContent = (++fireSpan.textContent).toString();
+     try{
+       const req = await fetch("/api/addReaction", {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           slug,
+           fire
+         }),
+       });
+       localStorage.setItem(slug, "true");
+       console.log(slug);
+     }catch(e){
+       console.error(e);
+       alert("Ya la cagaste");
+     }
+   })
 
   // reactionBtnAb.addEventListener("click", async () => {
   //   reactionBtnAb.setAttribute('style', 'color:red');

@@ -18,11 +18,13 @@ if (!post) {
   return Astro.redirect("/");
 }
 const total = await db.select().from(Reactions).where(eq(Reactions.slug, slug));
+const totalFire = await db.select({fire: Reactions.fire}).from(Reactions).where(eq(Reactions.slug, slug));
+const {fire} = totalFire[0]
 
 const { Content } = await post.render();
 ---
 
-<BlogPost data={post.data} num_of_likes={2} num_of_fire={3} num_of_thumb={1} num_of_rocket={100} slug={slug}>
+<BlogPost data={post.data} num_of_likes={2} num_of_fire={fire} num_of_thumb={1} num_of_rocket={100} slug={slug}>
 	
 	<Content />
 </BlogPost>
