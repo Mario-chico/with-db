@@ -4,7 +4,7 @@ const Reactions = defineTable({
   columns: {
     slug: column.text({primaryKey: true}),
     like: column.number({default: 0}),
-    fire: column.number({default: 0}),
+    fire: column.number({default: 1}),
     thumbDown: column.number({default: 0}),
     rocket: column.number({default: 0}),
     

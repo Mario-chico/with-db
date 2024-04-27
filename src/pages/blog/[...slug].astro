@@ -19,7 +19,10 @@ if (!post) {
 }
 const total = await db.select().from(Reactions).where(eq(Reactions.slug, slug));
 const totalFire = await db.select({fire: Reactions.fire}).from(Reactions).where(eq(Reactions.slug, slug));
+
 const {fire} = totalFire[0]
+
+console.log("el  fire " +  fire);
 
 const { Content } = await post.render();
 ---
