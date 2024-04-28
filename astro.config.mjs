@@ -9,4 +9,8 @@ export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap(), db()],
   output: 'hybrid',
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en", "pt-br"],
+  }
 });
